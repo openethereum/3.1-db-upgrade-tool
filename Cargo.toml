@@ -1,0 +1,11 @@
+[package]
+name = "oe-upgrage-db-3-1"
+version = "0.1.0"
+authors = ["OpenEthereum team"]
+edition = "2018"
+
+[dependencies]
+kvdb-rocksdb = "0.6.0"
+structopt = "0.3.11"
+anyhow = "1.0"
+thiserror = "1.0"
