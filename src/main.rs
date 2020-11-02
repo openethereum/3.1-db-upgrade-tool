@@ -29,7 +29,7 @@ pub enum Error {
     #[error("Migration cancelled.")]
     Cancelled,
     #[error("Current database version cannot be read. Check if folder exists.")]
-    UnknownDatabaseVersion,
+    UnknownDatabaseVersion(String),
     #[error("Current database version `{0}` is not supported")]
     UnsupportedDatabaseVersion(u32),
     #[error("Unexpected io error on DB migration")]
@@ -62,12 +62,12 @@ fn update_version(path: PathBuf) -> Result<(), Error> {
 
 fn current_version(path: PathBuf) -> Result<u32, Error> {
     match fs::File::open(version_file_path(path)) {
-        Err(_) => Err(Error::UnknownDatabaseVersion),
+        Err(err) => Err(Error::UnknownDatabaseVersion(format!("cannot open: {:?}",err))),
         Ok(mut file) => {
             let mut s = String::new();
             file.read_to_string(&mut s)
-                .map_err(|_| Error::UnknownDatabaseVersion)?;
-            u32::from_str_radix(&s, 10).map_err(|_| Error::UnknownDatabaseVersion)
+                .map_err(|err| Error::UnknownDatabaseVersion(format!("cannot read version: {:?}",err)))?;
+            u32::from_str_radix(&s, 10).map_err(|err| Error::UnknownDatabaseVersion(format!("cannot parse version: {:?}",err)))
         }
     }
 }
