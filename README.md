@@ -23,6 +23,8 @@ cd /tmp/
 git clone https://github.com/openethereum/3.1-db-upgrade-tool.git
 cd 3.1-db-upgrade-tool
 cargo run "$PARITY_PATH/chains/ethereum/db/906a34e69aec8c0d/overlayrecent"
+# Archive node run with this
+cargo run "$PARITY_PATH/chains/ethereum/db/906a34e69aec8c0d/archive"
 cd ~
 rm -Rf /tmp/3.1-db-upgrade-tool
 ```
