@@ -39,7 +39,7 @@ pub enum Error {
 #[derive(StructOpt)]
 #[structopt(
     name = "oe-update-db-3-1",
-    about = "OpenEthereum 2.5.13, 2.7.2, 3.0.1 to 3.1 DB upgrade tool"
+    about = "OpenEthereum 2.5.13, 2.7.2, 3.0.1 to 3.1/3.2 DB upgrade tool"
 )]
 struct Cli {
     /// The path to the db folder.
@@ -62,12 +62,18 @@ fn update_version(path: PathBuf) -> Result<(), Error> {
 
 fn current_version(path: PathBuf) -> Result<u32, Error> {
     match fs::File::open(version_file_path(path)) {
-        Err(err) => Err(Error::UnknownDatabaseVersion(format!("cannot open: {:?}",err))),
+        Err(err) => Err(Error::UnknownDatabaseVersion(format!(
+            "cannot open: {:?}",
+            err
+        ))),
         Ok(mut file) => {
             let mut s = String::new();
-            file.read_to_string(&mut s)
-                .map_err(|err| Error::UnknownDatabaseVersion(format!("cannot read version: {:?}",err)))?;
-            u32::from_str_radix(&s, 10).map_err(|err| Error::UnknownDatabaseVersion(format!("cannot parse version: {:?}",err)))
+            file.read_to_string(&mut s).map_err(|err| {
+                Error::UnknownDatabaseVersion(format!("cannot read version: {:?}", err))
+            })?;
+            u32::from_str_radix(&s, 10).map_err(|err| {
+                Error::UnknownDatabaseVersion(format!("cannot parse version: {:?}", err))
+            })
         }
     }
 }
@@ -108,7 +114,7 @@ fn migrate_database(db_path: PathBuf) -> Result<(), Error> {
     };
 
     println!(
-        "Migrating database from v{} ({} series) to v16 (3.1 series).",
+        "Migrating database from v{} ({} series) to v16 (3.1/3.2 series).",
         current_version, display
     );
 

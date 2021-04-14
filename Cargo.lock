@@ -323,7 +323,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "oe-upgrage-db-3-1"
+name = "oe-upgrade-db-3-1"
 version = "0.1.0-rc1"
 dependencies = [
  "anyhow",

@@ -1,4 +1,4 @@
-# Migrate the openethereum db from 2.5.13, 2.7.2, 3.0.1 to 3.1.0
+# Migrate the openethereum db from 2.5.13, 2.7.2, 3.0.1 to 3.1.x/3.2.x
 
 ## Warnings
 
