@@ -29,4 +29,10 @@ cd ~
 rm -Rf /tmp/3.1-db-upgrade-tool
 ```
 
+To migrate a Goerli Testnet database you should use:
+
+```bash
+cargo run "$PARITY_PATH/chains/goerli/db/b1d518969eab529d/overlayrecent"
+```
+
 Note that if your parity path is somewhere where you need super-user privileges to write to it, you'll need to add `sudo` before the `cargo run` line.
